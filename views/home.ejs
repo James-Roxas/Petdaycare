@@ -6,6 +6,21 @@
     <title>Pet_day_care_Home</title>
 </head>
 <body>
-    <h1>HELLO</h1>
+    <h1>Live Pet Status</h1>
+<ul>
+  <% pets.forEach(p => { %>
+    <li><%= p.name %> - <span id="status-<%= p._id %>"><%= p.status %></span></li>
+  <% }) %>
+</ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  socket.on('petActivityUpdate', data => {
+    const statuses = document.querySelectorAll("[id^='status-']");
+    statuses.forEach(el => el.textContent = data.status);
+  });
+</script>
+
 </body>
 </html>
