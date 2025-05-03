@@ -1,10 +1,16 @@
 const express = require('express');
 const path = require("path");
 const session = require("express-session");
+const http = require('http');
+const { Server } = require("socket.io");
 const authRoutes = require("../routes/authRoutes");
+const adminRoutes = require('../routes/adminRoutes'); // ✅ Moved up
+const petRoutes = require('../routes/petRoutes');
 const jwt = require('jsonwebtoken');
 
 const day_care_app = express();
+const server = http.createServer(day_care_app);
+const io = new Server(server);
 
 day_care_app.use(express.json());
 day_care_app.use(express.urlencoded({ extended: false }));
@@ -15,19 +21,26 @@ day_care_app.use(express.static("public"));
 day_care_app.use(session({ secret: "purrfect_secret", resave: false, saveUninitialized: true }));
 
 // Routes
-day_care_app.use("/", authRoutes);
-day_care_app.use('/admin', adminRoutes);  
+day_care_app.use("/", petRoutes);
+day_care_app.use("/auth", authRoutes);
+day_care_app.use('/admin', adminRoutes); // ✅ Now it works correctly
+
+// Socket.io setup for real-time pet status updates
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  // Example: emit petActivityUpdate every 10 seconds with mock data
+  setInterval(() => {
+    const mockStatus = { status: 'Active' };
+    socket.emit('petActivityUpdate', mockStatus);
+  }, 10000);
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
 
 const port = 5000;
-day_care_app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+server.listen(port, () => console.log(`Server running at http://localhost:${port}`));
 
-const token = jwt.sign(
-    { id: check._id, role: check.role },
-    'your_secret_key',
-    { expiresIn: '1h' }
-  );
-  
-  res.cookie("token", token).redirect(`/${check.role}/dashboard`);
-
-
-const adminRoutes = require('../routes/adminRoutes');
+// Removed misplaced JWT token creation code from here. It should be inside route handlers.
