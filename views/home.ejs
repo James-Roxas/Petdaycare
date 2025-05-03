@@ -7,20 +7,34 @@
 </head>
 <body>
     <h1>Live Pet Status</h1>
-<ul>
-  <% pets.forEach(p => { %>
-    <li><%= p.name %> - <span id="status-<%= p._id %>"><%= p.status %></span></li>
-  <% }) %>
-</ul>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-  socket.on('petActivityUpdate', data => {
-    const statuses = document.querySelectorAll("[id^='status-']");
-    statuses.forEach(el => el.textContent = data.status);
-  });
-</script>
+    <h2>Add New Pet</h2>
+    <form action="/add-pet" method="POST">
+        <label for="name">Pet Name:</label>
+        <input type="text" id="name" name="name" placeholder="Pet Name" required>
+        
+        <label for="status">Pet Status:</label>
+        <input type="text" id="status" name="status" placeholder="Pet Status" required>
 
+        <label for="owner">Owner Name:</label>
+        <input type="text" id="owner" name="owner" placeholder="Owner Name" required>
+
+        <button type="submit">Add Pet</button>
+    </form>
+
+    <ul>
+        <% pets.forEach(p => { %>
+            <li><%= p.name %> (Owner: <%= p.owner %>) - <span id="status-<%= p._id %>"><%= p.status %></span></li>
+        <% }) %>
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('petActivityUpdate', data => {
+            const statuses = document.querySelectorAll("[id^='status-']");
+            statuses.forEach(el => el.textContent = data.status);
+        });
+    </script>
 </body>
 </html>

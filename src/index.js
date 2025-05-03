@@ -3,6 +3,8 @@ const path = require("path");
 const session = require("express-session");
 const http = require('http');
 const { Server } = require("socket.io");
+require('../src/config');
+
 const authRoutes = require("../routes/authRoutes");
 const adminRoutes = require('../routes/adminRoutes'); // ✅ Moved up
 const petRoutes = require('../routes/petRoutes');
