@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const collection = require("../src/config");
+const User = require("../models/user"); 
 
 exports.signup = async (req, res) => {
   const data = {
@@ -7,28 +8,50 @@ exports.signup = async (req, res) => {
     password: req.body.password
   };
 
-  const existingUser = await collection.findOne({ name: data.name });
+  const existingUser = await User.findOne({ name: data.name });
   if (existingUser) {
-    return res.status(400).send("User already exists.");
+    return res.render("signup", { errorMessage: "User already exists. Please choose a different username." });
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
   data.password = hashedPassword;
 
-  await collection.insertMany(data);
-  res.redirect("/login");
+  const newUser = new User(data);
+  await newUser.save();
+  res.redirect("/");
 };
 
 exports.login = async (req, res) => {
+  const { username, password } = req.body;
+
   try {
-    const check = await collection.findOne({ name: req.body.username });
-    if (!check) return res.send("Username not found");
+    const user = await User.findOne({ name: username });
 
-    const match = await bcrypt.compare(req.body.password, check.password);
-    if (!match) return res.status(400).send("Invalid password.");
+    if (!user) {
+      return res.send("Invalid username or password");
+    }
 
-    res.render("home");
-  } catch {
-    res.send("Login error");
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.send("Invalid username or password");
+    }
+
+    // ✅ Store user info in session
+    req.session.user = {
+      id: user._id,
+      name: user.name,
+      role: user.role
+    };
+
+    // ✅ Redirect based on role
+    if (user.role === 'admin') {
+      return res.redirect('/admin/dashboard');
+    } else {
+      return res.redirect('/pet/home');
+    }
+
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).send("Server error");
   }
 };

@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { checkRole } = require('../middleware/auth');
-const adminController = require('../controllers/adminController');
 
-// Change `adminController.dashboard` to `getAdminDashboard`
-router.get('/dashboard', checkRole(['admin']), adminController.getAdminDashboard);
+router.get('/dashboard', checkRole(['admin']), (req, res) => {
+  res.render('admin_dashboard', {
+    users: [], // Fetch users from DB if needed
+    pets: [],  // Fetch pets if needed
+    user: req.session.user
+  });
+});
 
 module.exports = router;

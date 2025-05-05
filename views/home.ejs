@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet_day_care_Home</title>
+    <title>Pet Day Care - Home</title>
 </head>
 <body>
-    <h1>Live Pet Status</h1>
+    <h1>Welcome, <%= user.name %>!</h1>
+    <h2>Live Pet Status</h2>
 
-    <h2>Add New Pet</h2>
-    <form action="/add-pet" method="POST">
+    <h3>Add New Pet</h3>
+    <form action="/pet/add-pet" method="POST">
         <label for="name">Pet Name:</label>
         <input type="text" id="name" name="name" placeholder="Pet Name" required>
         
         <label for="status">Pet Status:</label>
         <input type="text" id="status" name="status" placeholder="Pet Status" required>
 
-        <label for="owner">Owner Name:</label>
-        <input type="text" id="owner" name="owner" placeholder="Owner Name" required>
+        <!-- Owner Name field is now removed, as it will be automatically assigned -->
+        <input type="hidden" name="owner" value="<%= user.name %>"> <!-- Set owner to logged-in user's name -->
 
         <button type="submit">Add Pet</button>
     </form>
@@ -32,8 +33,10 @@
     <script>
         const socket = io();
         socket.on('petActivityUpdate', data => {
-            const statuses = document.querySelectorAll("[id^='status-']");
-            statuses.forEach(el => el.textContent = data.status);
+            const statusElement = document.querySelector(`#status-${data.id}`);
+            if (statusElement) {
+                statusElement.textContent = data.status;
+            }
         });
     </script>
 </body>

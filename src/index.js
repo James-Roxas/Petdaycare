@@ -22,9 +22,14 @@ day_care_app.use(express.static("public"));
 // Session (optional but useful later)
 day_care_app.use(session({ secret: "purrfect_secret", resave: false, saveUninitialized: true }));
 
+day_care_app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // Routes
-day_care_app.use("/", petRoutes);
-day_care_app.use("/auth", authRoutes);
+day_care_app.use("/", authRoutes);
+day_care_app.use("/pet", petRoutes);
 day_care_app.use('/admin', adminRoutes); // ✅ Now it works correctly
 
 // Socket.io setup for real-time pet status updates
