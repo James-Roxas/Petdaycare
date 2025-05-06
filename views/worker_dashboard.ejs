@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Day Care - Home</title>
+</head>
+<body>
+    <h1>Welcome, <%= user.name %>!</h1>
+    <h2>Live Pet Status</h2>
+
+    <h3>Add New Pet</h3>
+    <form action="/pet/add-pet" method="POST">
+        <label for="name">Pet Name:</label>
+        <input type="text" id="name" name="name" placeholder="Pet Name" required>
+        
+        <label for="status">Pet Status:</label>
+        <input type="text" id="status" name="status" placeholder="Pet Status" required>
+
+        <!-- Owner Name field is now removed, as it will be automatically assigned -->
+        <input type="hidden" name="owner" value="<%= user.name %>"> <!-- Set owner to logged-in user's name -->
+
+        <button type="submit">Add Pet</button>
+    </form>
+
+    <ul>
+        <% pets.forEach(p => { %>
+            <li><%= p.name %> (Owner: <%= p.owner %>) - <span id="status-<%= p._id %>"><%= p.status %></span></li>
+        <% }) %>
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('petActivityUpdate', data => {
+            const statusElement = document.querySelector(`#status-${data.id}`);
+            if (statusElement) {
+                statusElement.textContent = data.status;
+            }
+        });
+    </script>
+</body>
+</html>

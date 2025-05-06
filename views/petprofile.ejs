@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Pet Profile</title>
+</head>
+<body>
+  <h1>Create Pet Profile</h1>
+
+  <form action="/pet/create" method="POST" enctype="multipart/form-data">
+    <label for="name">Pet Name:</label>
+    <input type="text" id="name" name="name" required><br>
+  
+    <label for="breed">Breed:</label>
+    <input type="text" id="breed" name="breed" required><br>
+  
+    <label for="age">Age (years):</label>
+    <input type="number" id="age" name="age" required><br>
+  
+    <label for="gender">Gender:</label>
+    <select name="gender" id="gender" required>
+      <option value="">Select</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select><br>
+  
+    <label for="color">Color:</label>
+    <input type="text" id="color" name="color"><br>
+  
+    <label for="birthday">Birthday:</label>
+    <input type="date" id="birthday" name="birthday"><br>
+  
+    <label for="spayed">Spayed / Neutered:</label>
+    <select name="spayed" id="spayed">
+      <option value="">Select</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select><br>
+  
+    <label for="weight">Weight (kg):</label>
+    <input type="number" step="0.1" id="weight" name="weight"><br>
+  
+    <label for="photo">Upload Photo:</label>
+    <input type="file" name="photo" accept="image/*"><br>
+  
+    <label for="notes">Additional Notes:</label><br>
+    <textarea name="notes" id="notes" rows="4" cols="30"></textarea><br>
+  
+    <!-- Owner Info -->
+    <input type="hidden" name="owner" value="<%= user.name %>">
+  
+    <button type="submit">Save Profile</button>
+  </form>
+  
+</body>
+</html>

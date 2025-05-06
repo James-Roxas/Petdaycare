@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Profile - <%= pet.name %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+    }
+    .card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><%= pet.name %> - Pet Profile</h1>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h3>Details</h3>
+      <p><strong>Breed:</strong> <%= pet.breed %></p>
+      <p><strong>Age:</strong> <%= pet.age %> years</p>
+      <p><strong>Weight:</strong> <%= pet.weight %> kg</p>
+      <p><strong>Color:</strong> <%= pet.color %></p>
+      <p><strong>Gender:</strong> <%= pet.gender %></p>
+      <p><strong>Birthday:</strong> <%= pet.birthday %></p>
+      <p><strong>Spayed/Neutered:</strong> <%= pet.spayed ? 'Yes' : 'No' %></p>
+      <p><strong>Notes:</strong> <%= pet.notes %></p>
+      <img src="<%= pet.photo %>" alt="Pet Photo" width="200">
+    </div>
+    <a href="/pet/home" class="action-button">Back to Dashboard</a>
+  </div>
+</body>
+</html>
