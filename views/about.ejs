@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>About Us</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-color: #fffbe7;
+    }
+    .carousel {
+      margin-bottom: 2rem;
+    }
+    .carousel img {
+      height: 400px;
+      object-fit: cover;
+    }
+    .container-box {
+      background-color: #f7f7f7;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+    .container-box h4 {
+      margin-bottom: 15px;
+    }
+    footer {
+      background-color: #f2d707;
+      padding: 20px 0;
+      color: white;
+      text-align: center;
+    }
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    footer .social-icons i {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #f2d707;">
+    <div class="container-fluid">
+      <div class="logo">
+        <img src="logo.png" alt="Logo" height="50" />
+      </div>
+      <div class="navbar-collapse d-flex justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carousel -->
+  <div id="carouselOne" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="picc1.jpg" class="d-block w-100" alt="Slide 1">
+      </div>
+      <div class="carousel-item">
+        <img src="picc2.jpg" class="d-block w-100" alt="Slide 2">
+      </div>
+      <div class="carousel-item">
+        <img src="picc4.jpg" class="d-block w-100" alt="Slide 3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOne" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselOne" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Mission & Vision Section -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="p-4 border rounded bg-light h-100">
+          <h3>Our Mission</h3>
+          <p>To build high-quality, innovative, and accessible web applications that solve real-world problems and empower users globally.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <div class="p-4 border rounded bg-light h-100">
+          <h3>Our Vision</h3>
+          <p>To become a leading web development team known for creativity, integrity, and technological excellence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paws & Fur Services Section -->
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Professional Pet Grooming -->
+      <div class="col-md-4">
+        <div class="container-box">
+          <h4>Professional Pet Grooming</h4>
+          <p>Our professional and experienced pet groomers provide premium grooming services with utmost care to ensure that your furbabies get the best pet grooming experience in the Metro’s posh and cozy pet salon.</p>
+        </div>
+      </div>
+
+      <!-- Premium Pet Hotel -->
+      <div class="col-md-4">
+        <div class="container-box">
+          <h4>Premium Pet Hotel</h4>
+          <p>You can now travel and do your daily errands without worrying about your furbabies. Paws & Fur’s convenient and comfortable pet hotels got your back. Your dogs and cats can have their daycare, pet boarding, or staycation while you enjoy your worry-free travels.</p>
+        </div>
+      </div>
+
+      <!-- Health & Wellness -->
+      <div class="col-md-4">
+        <div class="container-box">
+          <h4>Health & Wellness</h4>
+          <p>To ensure that your furbabies are in top shape, Paws & Fur’s in-house veterinarians can provide consultations and preventive pet health care & wellness services. Strictly by appointment only.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <!-- Quick Navigation -->
+      <div class="mb-3">
+        <a href="/">Home</a> | 
+        <a href="/gallery">Gallery</a> | 
+        <a href="/contact">Contact Us</a>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="social-icons">
+        <a href="https://www.facebook.com" target="_blank">
+          <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+        </a>
+        <a href="https://www.instagram.com" target="_blank">
+          <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+        </a>
+        <a href="https://www.twitter.com" target="_blank">
+          <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+        </a>
+      </div>
+
+      <p>&copy; 2025 Purrfect Stay. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (Bundle includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

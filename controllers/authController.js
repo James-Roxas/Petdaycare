@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
 
   const newUser = new User(data);
   await newUser.save();
-  res.redirect("/");
+  res.redirect("/auth");
 };
 
 exports.login = async (req, res) => {
