@@ -40,7 +40,6 @@ day_care_app.get("/", (req, res) => {
 });
 day_care_app.use("/auth", authRoutes);
 day_care_app.use("/pet", petRoutes);
-<<<<<<< HEAD
 day_care_app.use('/admin', adminRoutes); 
 // Gallery page
 day_care_app.get("/gallery", (req, res) => {
@@ -78,10 +77,8 @@ day_care_app.get("/logout", (req, res) => {
   });
 });
 
-=======
 day_care_app.use('/admin', adminRoutes); // ✅ Now it works correctly
 day_care_app.use('/worker', workerRoutes);
->>>>>>> 4e8c07558d674109cf90147f118071019ea82a19
 
 // Socket.io setup for real-time pet status updates
 io.on('connection', (socket) => {
