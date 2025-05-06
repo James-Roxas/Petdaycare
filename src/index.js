@@ -8,6 +8,7 @@ require('../src/config');
 const authRoutes = require("../routes/authRoutes");
 const adminRoutes = require('../routes/adminRoutes'); // ✅ Moved up
 const petRoutes = require('../routes/petRoutes');
+const workerRoutes = require('../routes/workerRoutes');
 const jwt = require('jsonwebtoken');
 
 const day_care_app = express();
@@ -31,6 +32,7 @@ day_care_app.use((req, res, next) => {
 day_care_app.use("/", authRoutes);
 day_care_app.use("/pet", petRoutes);
 day_care_app.use('/admin', adminRoutes); // ✅ Now it works correctly
+day_care_app.use('/worker', workerRoutes);
 
 // Socket.io setup for real-time pet status updates
 io.on('connection', (socket) => {
