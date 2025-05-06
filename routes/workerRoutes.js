@@ -10,7 +10,7 @@ router.get('/dashboard', async (req, res) => {
 
     try {
         const pets = await Pet.find(); // Worker can see all pets
-        res.render('worker-dashboard', { pets });
+        res.render('worker_dashboard', { pets, user: req.session.user });
     } catch (err) {
         console.error("Error fetching pets:", err);
         res.status(500).send("Error fetching pets.");

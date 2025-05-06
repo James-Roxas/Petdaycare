@@ -46,6 +46,8 @@ exports.login = async (req, res) => {
     // ✅ Redirect based on role
     if (user.role === 'admin') {
       return res.redirect('/admin/dashboard');
+    } else if (user.role === 'worker') {
+      return res.redirect('/worker/dashboard');
     } else {
       return res.redirect('/pet/home');
     }
