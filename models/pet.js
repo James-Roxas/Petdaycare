@@ -12,7 +12,12 @@ const petSchema = new mongoose.Schema({
   photo: String, // store image filename or path
   notes: String,
   owner: String,
-  userId: String
+  userId: String,
+  status: String,
+
+  upcomingAppointment: Date,
+  lastVisit: Date,
+  paymentStatus: String
 });
 
 module.exports = mongoose.model('Pet', petSchema);

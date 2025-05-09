@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Pet = require('../models/pet'); // Correct path to model
+const Pet = require('../models/pet');
+const User = require('../models/user');
+const Appointment = require('../models/appointmentModel');
+const Notification = require('../models/notificationModel');
 const multer = require('multer');
 const path = require('path');
 
@@ -16,20 +19,38 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }); // Save images to public/uploads/
 
-// Ensure `public/uploads` folder exists
-
-// GET home page - render home.ejs with pets data from MongoDB
+// GET home page - render home.ejs with pets, appointments, and notifications
 router.get('/home', async (req, res) => {
     if (!req.session.user) {
         return res.status(401).send("Unauthorized. Please log in.");
     }
 
     try {
-        const pets = await Pet.find({ userId: req.session.user.id }); // Filter by user
-        res.render('home', { pets, user: req.session.user });
+        const pets = await Pet.find({ userId: req.session.user.id });
+
+        // Fetch appointments and split into upcoming/past
+        const allAppointments = await Appointment.find({ owner: req.session.user.id }).populate('pet');
+        const now = new Date();
+        const upcomingAppointments = allAppointments.filter(appt => appt.date >= now);
+        const pastAppointments = allAppointments.filter(appt => appt.date < now);
+
+        // Fetch notifications
+        const notifications = await Notification.find({ userId: req.session.user.id }).sort({ createdAt: -1 });
+
+        // Placeholder for payments
+        const payments = [];
+
+        res.render('home', { 
+            pets, 
+            user: req.session.user, 
+            upcomingAppointments, 
+            notifications, 
+            pastAppointments, 
+            payments 
+        });
     } catch (err) {
-        console.error("Error fetching pets from MongoDB", err);
-        res.status(500).send("Error fetching pets.");
+        console.error("Error fetching dashboard data:", err);
+        res.status(500).send("Error loading dashboard.");
     }
 });
 
@@ -40,18 +61,18 @@ router.post('/add-pet', async (req, res) => {
     }
 
     const { name, status } = req.body;
-    const owner = req.session.user.name; // Automatically assign the logged-in user's name as the owner
+    const owner = req.session.user.name;
     
     const newPet = new Pet({
         name,
         status,
-        owner, // Automatically assign the owner based on the session
-        userId: req.session.user.id // Save the user ID as well for linking the pet to the user
+        owner,
+        userId: req.session.user.id
     });
 
     try {
         await newPet.save();
-        res.redirect('/pet/home'); // Redirect to the home page after adding the pet
+        res.redirect('/pet/home');
     } catch (err) {
         console.error("Error adding new pet:", err);
         res.status(500).send("Error adding pet.");
@@ -61,12 +82,12 @@ router.post('/add-pet', async (req, res) => {
 // GET route to render the pet profile creation form
 router.get('/create', (req, res) => {
     if (!req.session.user) {
-        return res.redirect('/login'); // Redirect if the user is not logged in
+        return res.redirect('/login');
     }
-    res.render('petprofile', { user: req.session.user }); // Render the petprofile.ejs page
+    res.render('petprofile', { user: req.session.user });
 });
 
-// POST route for creating a pet profile for owners
+// POST route for creating a pet profile
 router.post('/create', upload.single('photo'), async (req, res) => {
     if (!req.session.user) {
         return res.status(401).send("Unauthorized");
@@ -98,7 +119,7 @@ router.post('/create', upload.single('photo'), async (req, res) => {
     }
 });
 
-// Route to view a specific pet profile by ID
+// View specific pet profile
 router.get('/view/:petId', async (req, res) => {
     if (!req.session.user) {
         return res.status(401).send("Unauthorized. Please log in.");
@@ -107,21 +128,16 @@ router.get('/view/:petId', async (req, res) => {
     const petId = req.params.petId;
 
     try {
-        // Find the pet by ID
         const pet = await Pet.findById(petId);
-
         if (!pet) {
             return res.status(404).send("Pet not found.");
         }
 
-        // Render the pet profile page with the pet data
         res.render('viewPetProfile', { pet, user: req.session.user });
     } catch (err) {
         console.error("Error fetching pet profile:", err);
         res.status(500).send("Error fetching pet profile.");
     }
 });
-
-
 
 module.exports = router;

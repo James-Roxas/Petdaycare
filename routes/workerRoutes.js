@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Pet = require('../models/pet'); // Pet model
+const { io } = require('../src/index'); // Import io instance
+
+// Debug: Check if io is loaded
+console.log("Socket.io in workerRoutes:", io ? "Ready" : "Not Ready");
 
 // Worker Dashboard: View all pets (admin/workers can see all pets)
 router.get('/dashboard', async (req, res) => {
@@ -26,7 +30,7 @@ router.get('/edit-pet/:id', async (req, res) => {
     const petId = req.params.id;
     try {
         const pet = await Pet.findById(petId);
-        res.render('edit-pet', { pet });
+        res.render('edit-petstatus', { pet }); 
     } catch (err) {
         console.error("Error fetching pet:", err);
         res.status(500).send("Error fetching pet.");
@@ -36,13 +40,25 @@ router.get('/edit-pet/:id', async (req, res) => {
 // Save updated pet details (worker)
 router.post('/edit-pet/:id', async (req, res) => {
     const petId = req.params.id;
-    const { name, status, owner } = req.body;
+    const { status } = req.body;
 
     try {
-        await Pet.findByIdAndUpdate(petId, { name, status, owner });
+        const updatedPet = await Pet.findByIdAndUpdate(
+            petId,
+            { status },
+            { new: true }
+        );
+
+        // Safe emit
+        if (io) {
+            io.emit('petActivityUpdate', { id: updatedPet._id, status: updatedPet.status });
+        } else {
+            console.warn("Socket.io is not initialized. Skipping emit.");
+        }
+
         res.redirect('/worker/dashboard');
     } catch (err) {
-        console.error("Error updating pet:", err);
+        console.error("Error updating pet:", err.message); // log the message
         res.status(500).send("Error updating pet.");
     }
 });

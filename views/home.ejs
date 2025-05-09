@@ -23,7 +23,8 @@
   </header>
 
   <div class="container">
-    <!-- Profile Section -->
+
+    <!-- User Profile -->
     <div class="card">
       <h3>User Profile</h3>
       <p><strong>Email:</strong> <%= user.email %></p>
@@ -40,9 +41,10 @@
           <% pets.forEach(p => { %>
             <li>
               <strong><%= p.name %></strong> - Status: 
-              <span id="status-<%= p._id %>"><%= p.status %></span>
+              <span id="status-<%= p._id %>"><%= p.status || 'Unknown' %></span>
+              <br />
+              <a href="/pet/view/<%= p._id %>" class="action-button">View Pet Profile</a>
             </li>
-            <a href="/pet/view/<%= p._id %>" class="action-button">View Pet Profile</a>
           <% }) %>
         </ul>
       <% } %>
@@ -51,28 +53,75 @@
 
     <!-- Dashboard Grid -->
     <div class="grid">
+
+      <!-- Upcoming Appointments -->
       <div class="card">
         <h3>Upcoming Appointments</h3>
-        <p>No upcoming appointments.</p>
+        <% if (upcomingAppointments.length === 0) { %>
+          <p>No upcoming appointments.</p>
+        <% } else { %>
+          <ul>
+            <% upcomingAppointments.forEach(a => { %>
+              <li>
+                <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+                <%= new Date(a.date).toLocaleString() %> 
+                (<%= a.service %>)
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
       </div>
 
+      <!-- Notifications -->
       <div class="card">
         <h3>Notifications</h3>
-        <p>No new notifications.</p>
+        <% if (notifications.length === 0) { %>
+          <p>No new notifications.</p>
+        <% } else { %>
+          <ul>
+            <% notifications.forEach(n => { %>
+              <li><%= n.message %></li>
+            <% }) %>
+          </ul>
+        <% } %>
       </div>
 
+      <!-- Past Appointments -->
       <div class="card">
         <h3>Appointment History</h3>
-        <p>View past appointments and activities.</p>
+        <% if (pastAppointments.length === 0) { %>
+          <p>No past appointments.</p>
+        <% } else { %>
+          <ul>
+            <% pastAppointments.forEach(a => { %>
+              <li>
+                <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+                <%= new Date(a.date).toLocaleString() %> 
+                (<%= a.service %>)
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
       </div>
 
+      <!-- Payment Summary -->
       <div class="card">
         <h3>Payment Summary</h3>
-        <p>No payments due.</p>
+        <% if (payments.length === 0) { %>
+          <p>No payments.</p>
+        <% } else { %>
+          <ul>
+            <% payments.forEach(p => { %>
+              <li><%= p.petName %>: <%= p.status %></li>
+            <% }) %>
+          </ul>
+        <% } %>
       </div>
+      
     </div>
   </div>
 
+  <!-- Socket.io for real-time pet activity updates -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();

@@ -5,6 +5,7 @@ const User = require("../models/user");
 exports.signup = async (req, res) => {
   const data = {
     name: req.body.username,
+    email: req.body.email,  // ✅ Add this line
     password: req.body.password
   };
 
@@ -18,8 +19,9 @@ exports.signup = async (req, res) => {
 
   const newUser = new User(data);
   await newUser.save();
-  res.redirect("/auth");
+  res.redirect("/auth/login");
 };
+
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
@@ -36,14 +38,14 @@ exports.login = async (req, res) => {
       return res.send("Invalid username or password");
     }
 
-    // ✅ Store user info in session
+    // Store user info in session
     req.session.user = {
       id: user._id,
       name: user.name,
       role: user.role
     };
 
-    // ✅ Redirect based on role
+    // Redirect based on role
     if (user.role === 'admin') {
       return res.redirect('/admin/dashboard');
     } else if (user.role === 'worker') {
