@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Pet Profile</title>
+</head>
+<body>
+  <h1>Edit Pet: <%= pet.name %></h1>
+  <form action="/pet/edit/<%= pet._id %>" method="POST" enctype="multipart/form-data">
+    <label>Name: <input type="text" name="name" value="<%= pet.name %>" required></label><br>
+    <label>Breed: <input type="text" name="breed" value="<%= pet.breed %>"></label><br>
+    <label>Age: <input type="number" name="age" value="<%= pet.age %>"></label><br>
+    <label>Weight: <input type="number" name="weight" value="<%= pet.weight %>"></label><br>
+    <label>Color: <input type="text" name="color" value="<%= pet.color %>"></label><br>
+    <label>Gender: 
+      <select name="gender">
+        <option value="Male" <%= pet.gender === 'Male' ? 'selected' : '' %>>Male</option>
+        <option value="Female" <%= pet.gender === 'Female' ? 'selected' : '' %>>Female</option>
+      </select>
+    </label><br>
+    <label>Birthday: <input type="date" name="birthday" value="<%= pet.birthday.toISOString().substring(0, 10) %>"></label><br>
+    <label>Spayed: 
+      <select name="spayed">
+        <option value="Yes" <%= pet.spayed === 'Yes' ? 'selected' : '' %>>Yes</option>
+        <option value="No" <%= pet.spayed === 'No' ? 'selected' : '' %>>No</option>
+      </select>
+    </label><br>
+    <label>Notes:<br><textarea name="notes"><%= pet.notes %></textarea></label><br>
+    <label>New Photo: <input type="file" name="photo"></label><br>
+    <button type="submit">Update</button>
+  </form>
+  <a href="/pet/home" class="action-button">Back to Dashboard</a>
+</body>
+</html>

@@ -76,21 +76,47 @@
 
   <div class="container">
     <div class="card">
-      <h3>All Pets</h3>
-      <% if (pets.length === 0) { %>
-        <p>No pets available.</p>
-      <% } else { %>
-        <ul>
-          <% pets.forEach(p => { %>
+      <h3>Assigned Pets</h3>
+<% if (workerBookings.length === 0) { %>
+    <p>No pets assigned to you.</p>
+<% } else { %>
+    <ul>
+        <% workerBookings.forEach(booking => { %>
             <li>
-              <strong><%= p.name %></strong> - Owner: <%= p.owner %> - Status: <span id="status-<%= p._id %>"><%= p.status %></span>
-              <a href="/worker/edit-pet/<%= p._id %>" class="action-button">Edit</a>
+                <strong><%= booking.pet.name %></strong> - Owner: <%= booking.pet.owner %> - Status: <span id="status-<%= booking.pet._id %>"><%= booking.status %></span>
+                <a href="/worker/edit-pet/<%= booking.pet._id %>" class="action-button">Edit</a>
+                <p>Booking Date: <%= booking.startDate %> to <%= booking.endDate %></p>
+                <p>Notes: <%= booking.notes %></p>
             </li>
-          <% }) %>
-        </ul>
-      <% } %>
+        <% }) %>
+    </ul>
+<% } %>
     </div>
   </div>
+
+  <h3>Pending Appointments</h3>
+<% if (appointments.length === 0) { %>
+    <p>No pending appointments.</p>
+<% } else { %>
+    <ul>
+        <% appointments.forEach(appointment => { %>
+            <li>
+                <strong><%= appointment.pet.name %></strong> - Owner: <%= appointment.pet.owner %> 
+                - Status: <span id="status-<%= appointment._id %>"><%= appointment.status %></span>
+                
+                <!-- View Button -->
+                <a href="/worker/view-appointment/<%= appointment._id %>" class="action-button">View</a>
+
+                <!-- Accept Button -->
+                <a href="/worker/accept-appointment/<%= appointment._id %>" class="action-button">Accept</a>
+
+                <p>Appointment Date: <%= appointment.startDate %> to <%= appointment.endDate %></p>
+                <p>Notes: <%= appointment.additionalInfo %></p>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
 
   <script src="/socket.io/socket.io.js"></script>
   <script>

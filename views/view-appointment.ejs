@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appointment Details</title>
+</head>
+<body>
+  <h1>Appointment Details for <%= appointment.pet.name %></h1>
+  
+  <!-- Pet Information -->
+  <h3>Pet Information:</h3>
+  <p><strong>Name:</strong> <%= appointment.pet.name %></p>
+  <p><strong>Breed:</strong> <%= appointment.pet.breed %></p>
+  <p><strong>Age:</strong> <%= appointment.pet.age %> years</p>
+  <p><strong>Gender:</strong> <%= appointment.pet.gender %></p>
+  <p><strong>Color:</strong> <%= appointment.pet.color %></p>
+  <p><strong>Status:</strong> <%= appointment.pet.status %></p>
+  
+  <!-- Owner Information -->
+  <p><strong>Owner:</strong> <%= appointment.pet.owner %></p>
+
+  <!-- Appointment Information -->
+  <h3>Appointment Information:</h3>
+  <p><strong>Status:</strong> <%= appointment.status %></p>
+  <p><strong>Appointment Start:</strong> <%= appointment.startDate %></p>
+  <p><strong>Duration:</strong> <%= appointment.duration %> days</p>
+  <p><strong>Additional Info:</strong> <%= appointment.additionalInfo %></p>
+  <p><strong>Pickup Option:</strong> <%= appointment.pickupOption %></p>
+  
+  <a href="/worker/dashboard">Back to Dashboard</a>
+</body>
+</html>

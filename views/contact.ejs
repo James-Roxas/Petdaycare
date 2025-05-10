@@ -97,37 +97,21 @@
   </nav>
 
   <div class="container my-5">
-    <form>
+    <form method="POST" action="/user/book"> <!-- Form now sends POST request to /appointments/book -->
       <a href="/pet/home">Back to Dashboard</a> 
       <h3 class="mb-4">Book Now</h3>
-
       <div class="mb-3">
-        <label class="form-label">I'm looking for service for my:</label>
+        <label class="form-label">Choose a pet for the service:</label>
         <div class="d-flex flex-wrap">
-          <% ['Dog', 'Cat', 'Rabbit/Bunny', 'Guinea Pig', 'Other'].forEach((type, i) => {
-              let id = type.toLowerCase().replace(/[ /]/g, '');
-          %>
+          <% pets.forEach(p => { %>
             <div class="form-check me-3">
-              <input class="form-check-input" type="radio" name="petType" id="<%= id %>Radio" value="<%= id %>">
-              <label class="form-check-label" for="<%= id %>Radio"><%= type %></label>
+              <input class="form-check-input" type="radio" name="petId" id="pet-<%= p._id %>" value="<%= p._id %>">
+              <label class="form-check-label" for="pet-<%= p._id %>">
+                <%= p.name %> - <%= p.breed %> 
+              </label>
             </div>
           <% }) %>
         </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">How many pets do you need to board?</label>
-        <input type="number" name="numPets" class="form-control" min="1" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">What breed is it? (Optional)</label>
-        <input type="text" name="breed" class="form-control" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">What is the size of your pet? (KG)</label>
-        <input type="number" name="petSize" class="form-control" />
       </div>
 
       <div class="mb-3">

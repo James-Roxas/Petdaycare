@@ -1,6 +1,7 @@
-const bcrypt = require("bcrypt");
 const collection = require("../src/config");
-const User = require("../models/user"); 
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");  // Import JWT
+const User = require("../models/user");
 
 exports.signup = async (req, res) => {
   const data = {
@@ -22,7 +23,6 @@ exports.signup = async (req, res) => {
   res.redirect("/auth/login");
 };
 
-
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -38,24 +38,39 @@ exports.login = async (req, res) => {
       return res.send("Invalid username or password");
     }
 
-    // Store user info in session
+    // Create JWT token
+    const token = jwt.sign({ userRecord: user }, "purrfect_secret", { expiresIn: '1h' });
+
+    // Store user info in session and token in session/cookies
     req.session.user = {
       id: user._id,
       name: user.name,
       role: user.role
     };
+    req.session.token = token; // Store token in session
+    res.cookie("token", token, { httpOnly: true }); // Store token in cookies (optional)
 
     // Redirect based on role
-    if (user.role === 'admin') {
-      return res.redirect('/admin/dashboard');
-    } else if (user.role === 'worker') {
-      return res.redirect('/worker/dashboard');
+    if (user.role === "admin") {
+      return res.redirect("/admin/dashboard");
+    } else if (user.role === "worker") {
+      return res.redirect("/worker/dashboard");
     } else {
-      return res.redirect('/pet/home');
+      return res.redirect("/pet/home");
     }
 
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).send("Server error");
   }
+};
+
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send("Could not log out.");
+    }
+    res.clearCookie("token");  // Clear token from cookies
+    res.redirect("/auth/login");
+  });
 };

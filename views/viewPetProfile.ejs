@@ -48,7 +48,14 @@
       <p><strong>Notes:</strong> <%= pet.notes %></p>
       <img src="<%= pet.photo %>" alt="Pet Photo" width="200">
     </div>
+    
     <a href="/pet/home" class="action-button">Back to Dashboard</a>
+    <a href="/pet/edit/<%= pet._id %>" class="action-button">Edit Profile</a>
+    <form action="/pet/delete/<%= pet._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this pet?');">
+  <button type="submit">Delete Profile</button>
+</form>
+
+
   </div>
 </body>
 </html>

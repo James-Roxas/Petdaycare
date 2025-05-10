@@ -140,4 +140,84 @@ router.get('/view/:petId', async (req, res) => {
     }
 });
 
+
+//Edit
+router.get('/edit/:petId', async (req, res) => {
+  if (!req.session.user) return res.redirect('/auth/login');
+
+  try {
+    const pet = await Pet.findById(req.params.petId);
+    if (!pet || pet.userId !== req.session.user.id) {
+      return res.status(403).send("Not authorized to edit this pet.");
+    }
+    res.render('editPetProfile', { pet });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading edit form.");
+  }
+});
+router.post('/edit/:petId', upload.single('photo'), async (req, res) => {
+  if (!req.session.user) return res.status(401).send("Unauthorized.");
+
+  try {
+    const pet = await Pet.findById(req.params.petId);
+    if (!pet || pet.userId !== req.session.user.id) {
+      return res.status(403).send("Not authorized to edit this pet.");
+    }
+
+    // Update fields
+    pet.name = req.body.name;
+    pet.breed = req.body.breed;
+    pet.age = req.body.age;
+    pet.weight = req.body.weight;
+    pet.color = req.body.color;
+    pet.gender = req.body.gender;
+    pet.birthday = req.body.birthday;
+    pet.spayed = req.body.spayed;
+    pet.notes = req.body.notes;
+
+    if (req.file) {
+      pet.photo = `/uploads/${req.file.filename}`;
+    }
+
+    await pet.save();
+    res.redirect(`/pet/view/${pet._id}`);
+  } catch (err) {
+    console.error("Error updating pet:", err);
+    res.status(500).send("Failed to update pet.");
+  }
+});
+
+//delete Pet 
+router.post('/delete/:petId', async (req, res) => {
+  if (!req.session.user) return res.status(401).send("Unauthorized.");
+
+  try {
+    const pet = await Pet.findById(req.params.petId);
+
+    if (!pet || pet.userId !== req.session.user.id) {
+      return res.status(403).send("Not authorized to delete this pet.");
+    }
+    
+    const fs = require('fs');
+const path = require('path');
+
+if (pet.photo) {
+  const imagePath = path.join(__dirname, '..', 'public', pet.photo);
+  fs.unlink(imagePath, (err) => {
+    if (err) console.warn("Failed to delete photo:", err);
+  });
+}
+
+
+    await Pet.deleteOne({ _id: req.params.petId });
+
+    res.redirect('/pet/home');
+  } catch (err) {
+    console.error("Error deleting pet:", err);
+    res.status(500).send("Failed to delete pet.");
+  }
+});
+
+
 module.exports = router;

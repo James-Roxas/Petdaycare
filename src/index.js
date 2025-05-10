@@ -14,6 +14,7 @@ const authRoutes = require("../routes/authRoutes");
 const adminRoutes = require('../routes/adminRoutes'); 
 const petRoutes = require('../routes/petRoutes');
 const workerRoutes = require('../routes/workerRoutes');
+const userRoutes = require('../routes/userRoutes');
 const jwt = require('jsonwebtoken');
 
 const day_care_app = express();
@@ -50,21 +51,53 @@ day_care_app.use("/auth", authRoutes);
 day_care_app.use("/pet", petRoutes);
 day_care_app.use('/admin', adminRoutes);
 day_care_app.use("/worker", workerRoutes); 
+day_care_app.use("/user", userRoutes);  // Use '/user' or adjust if you prefer
+
 // Gallery page
 day_care_app.get("/gallery", (req, res) => {
   res.render("gallery"); 
 });
 
 // Contact page
-day_care_app.get('/contact', (req, res) => {
+day_care_app.get('/contact', async (req, res) => {
+  // Check if user is logged in
   if (!req.session.user) {
-    return res.redirect('/auth/login');
+    return res.redirect('/auth/login');  // Redirect to login if no user session
   }
-  res.render('contact', {
-    title: 'Contact Us',
-    user: req.session.user
-  });
+
+  const token = req.session.token || req.cookies?.token;  // Check for token in session or cookies
+
+  if (!token) {
+    return res.redirect('/auth/login');  // Redirect if no token is found
+  }
+
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, "purrfect_secret"); 
+
+    // Retrieve the user record using the decoded data
+    const userRecord = await User.findById(decoded.userRecord._id);
+
+    if (!userRecord) {
+      // If no user is found, redirect to login
+      return res.redirect('/auth/login');
+    }
+
+    // Fetch pets associated with this user
+    const pets = await Pet.find({ userId: userRecord._id });
+
+    // Pass the user and pets to the contact.ejs view
+    res.render('contact', {
+      title: 'Contact Us',
+      user: userRecord,
+      pets: pets  // Pass pets data to the view
+    });
+  } catch (err) {
+    console.error('Error fetching user or pets:', err.message);
+    res.redirect('/auth/login');  // Redirect to login in case of error
+  }
 });
+
 
 // About page
 day_care_app.get("/about", (req, res) => {
