@@ -19,40 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }); // Save images to public/uploads/
 
-// GET home page - render home.ejs with pets, appointments, and notifications
-router.get('/home', async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).send("Unauthorized. Please log in.");
-    }
 
-    try {
-        const pets = await Pet.find({ userId: req.session.user.id });
-
-        // Fetch appointments and split into upcoming/past
-        const allAppointments = await Appointment.find({ owner: req.session.user.id }).populate('pet');
-        const now = new Date();
-        const upcomingAppointments = allAppointments.filter(appt => appt.date >= now);
-        const pastAppointments = allAppointments.filter(appt => appt.date < now);
-
-        // Fetch notifications
-        const notifications = await Notification.find({ userId: req.session.user.id }).sort({ createdAt: -1 });
-
-        // Placeholder for payments
-        const payments = [];
-
-        res.render('home', { 
-            pets, 
-            user: req.session.user, 
-            upcomingAppointments, 
-            notifications, 
-            pastAppointments, 
-            payments 
-        });
-    } catch (err) {
-        console.error("Error fetching dashboard data:", err);
-        res.status(500).send("Error loading dashboard.");
-    }
-});
 
 // POST route for adding pet status
 router.post('/add-pet', async (req, res) => {

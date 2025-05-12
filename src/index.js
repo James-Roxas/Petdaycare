@@ -9,6 +9,9 @@ const Appointment = require('../models/appointmentModel');
 const Notification = require('../models/notificationModel');
 require('../src/config');
   
+const multer = require('multer');
+const fs = require('fs');
+
 
 const authRoutes = require("../routes/authRoutes");
 const adminRoutes = require('../routes/adminRoutes'); 
@@ -104,15 +107,93 @@ day_care_app.get("/about", (req, res) => {
   res.render("about"); 
 });
 
-// Edit Profile page
-day_care_app.get("/edit-profile", (req, res) => {
-  const token = req.session.token || req.cookies?.token;
-  if (token) {
-    res.render("editProfile"); // Make sure you have an editProfile.ejs file
-  } else {
-    res.redirect("/home"); // Redirect to homepage if not logged in
+// Multer setup for profile photo uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    console.log("Destination directory for file upload:", 'public/uploads/');
+    cb(null, 'public/uploads/');
+  },
+  filename: function (req, file, cb) {
+    console.log("File to be uploaded:", file.originalname);
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    // Allow only image files (jpeg, jpg, png, gif)
+    const filetypes = /jpeg|jpg|png|gif/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    console.log("File type check:", {
+      mimetype,
+      extname,
+      fileMimetype: file.mimetype,
+      fileExtname: path.extname(file.originalname).toLowerCase()
+    });
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      console.log("Invalid file type detected:", file.originalname);
+      return cb(new Error("Only image files are allowed."));
+    }
+  },
+  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+  onFileUploadStart: (file) => {
+    console.log(`Started uploading file: ${file.originalname}`);
+  },
+  onFileUploadComplete: (file) => {
+    console.log(`Successfully uploaded file: ${file.originalname}`);
+  }
+});
+
+// Edit Profile page (GET)
+day_care_app.get("/edit-profile", async (req, res) => {
+  const token = req.session.token || req.cookies?.token;
+
+  if (!token) return res.redirect('/auth/login');
+
+  try {
+    const decoded = jwt.verify(token, "purrfect_secret");
+    const user = await User.findById(decoded.userRecord._id);
+    if (!user) return res.redirect('/auth/login');
+
+    res.render("Edit_Profile", { user });
+  } catch (err) {
+    res.status(500).send("Error loading profile.");
+  }
+});
+
+// Edit Profile page (POST)
+day_care_app.post("/edit-profile", upload.single("Userphoto"), async (req, res) => {
+  const token = req.session.token || req.cookies?.token;
+
+  if (!token) return res.redirect('/auth/login');
+
+  try {
+    const decoded = jwt.verify(token, "purrfect_secret");
+    const userId = decoded.userRecord._id;
+
+    const { name, email, PhoneNumber } = req.body;
+    const updateData = { name, email, PhoneNumber };
+
+    if (req.file) {
+      updateData.Userphoto = "/uploads/" + req.file.filename;
+    }
+
+    await User.findByIdAndUpdate(userId, updateData);
+    res.redirect("/home");
+  } catch (err) {
+    res.status(500).send("Failed to update profile.");
+  }
+});
+
+
+
+
 
 // Logout
 day_care_app.get("/logout", (req, res) => {
@@ -144,24 +225,46 @@ io.on('connection', (socket) => {
 day_care_app.get("/home", async (req, res) => {
   const token = req.session.token || req.cookies?.token;
 
-  if (!req.session.token && !req.cookies?.token) {
-    return res.redirect("/home");  // If there's no token, redirect to login page
+  if (!token) {
+    return res.redirect("/home");
   }
-  
 
   try {
     const decoded = jwt.verify(token, "purrfect_secret");
     const userRecord = await User.findById(decoded.userRecord._id);
-
     const userIdString = userRecord._id.toString();
 
-    // Fix: convert ObjectId to string
     const pets = await Pet.find({ userId: userIdString });
 
-    const allAppointments = await Appointment.find({ owner: userIdString }).populate('pet');
+    // Fetch all appointments and populate pet info
+const allAppointments = await Appointment.find({ userId: userIdString }).populate('pet');
     const now = new Date();
-    const upcomingAppointments = allAppointments.filter(appt => new Date(appt.date) >= now);
-    const pastAppointments = allAppointments.filter(appt => new Date(appt.date) < now);
+
+    // Attach timeStatus to each appointment
+    const appointments = allAppointments.map(appt => {
+      const startDate = new Date(appt.startDate);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + appt.duration);
+
+      let timeStatus = "Upcoming";
+      if (endDate < now) timeStatus = "Past";
+      else if (startDate <= now && endDate >= now) timeStatus = "Ongoing";
+
+      return { ...appt._doc, timeStatus };
+    });
+
+    // ✅ Debug logging
+    console.log("Decoded user:", userRecord.name);
+    console.log("Number of pets:", pets.length);
+    console.log("Number of appointments:", allAppointments.length);
+    appointments.forEach((appt, i) => {
+      console.log(`Appointment ${i + 1}:`, {
+        petName: appt.pet?.name,
+        startDate: appt.startDate,
+        duration: appt.duration,
+        timeStatus: appt.timeStatus
+      });
+    });
 
     const notifications = await Notification.find({ userId: userIdString }).sort({ createdAt: -1 });
 
@@ -173,8 +276,7 @@ day_care_app.get("/home", async (req, res) => {
     res.render("home", {
       user: userRecord,
       pets,
-      upcomingAppointments,
-      pastAppointments,
+      appointments,
       notifications,
       payments
     });
@@ -184,6 +286,10 @@ day_care_app.get("/home", async (req, res) => {
     res.redirect("/home");
   }
 });
+
+
+
+
 
 
 const port = 5000;

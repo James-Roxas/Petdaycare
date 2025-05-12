@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="/css/home.css" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <img src="/public/logo.png" alt="Logo" class="logo" />
+      <span class="welcome-text">Edit Profile</span>
+    </div>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Edit Your Profile</h2>
+    <form action="/edit-profile" method="POST" enctype="multipart/form-data" class="form-card">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="<%= user.name %>" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="<%= user.email %>" required />
+
+      <label for="PhoneNumber">Phone Number:</label>
+      <input type="text" id="PhoneNumber" name="PhoneNumber" value="<%= user.PhoneNumber %>" required />
+
+      <label for="Userphoto">Profile Photo:</label>
+      <% if (user.Userphoto) { %>
+        <img src="<%= user.Userphoto %>" alt="Profile Photo" width="100" />
+      <% } %>
+      <input type="file" id="Userphoto" name="Userphoto" />
+
+      <button type="submit" class="action-button">Save Changes</button>
+    </form>
+  </div>
+</body>
+</html>

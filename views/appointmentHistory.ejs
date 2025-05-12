@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appointment History</title>
+  <link rel="stylesheet" href="/css/home.css" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <img src="/public/logo.png" alt="Logo" class="logo" />
+      <span class="welcome-text">Appointment Overview for <%= user.name %></span>
+    </div>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Appointments</h2>
+
+    <!-- Pending Appointments -->
+    <h3>Pending</h3>
+    <% const pending = appointments.filter(a => a.approvalStatus === 'Pending'); %>
+    <% if (pending.length === 0) { %>
+      <p>No pending appointments.</p>
+    <% } else { %>
+      <ul>
+        <% pending.forEach(a => { %>
+          <li>
+            <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+            <%= new Date(a.startDate).toLocaleString() %> 
+            (<%= a.service %>) — 
+            <em>Status:</em> <%= a.approvalStatus %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <!-- Accepted Appointments -->
+<h3>Accepted</h3>
+<% const accepted = appointments.filter(a => a.approvalStatus === 'Accepted' && a.timeStatus !== 'Past'); %>
+<% if (accepted.length === 0) { %>
+  <p>No upcoming accepted appointments.</p>
+<% } else { %>
+  <ul>
+    <% accepted.forEach(a => {
+      const start = new Date(a.startDate);
+      const end = new Date(start);
+      end.setDate(end.getDate() + a.duration);
+    %>
+      <li>
+        <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+        <%= start.toLocaleString() %> to <%= end.toLocaleString() %> 
+        (<%= a.service %>) — 
+        <em>Status:</em> <%= a.timeStatus %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+    <!-- Appointment History (Ignored or Past) -->
+    <h2>Appointment History</h2>
+    <% const history = appointments.filter(a =>
+      a.approvalStatus === 'Ignored' ||
+      (a.approvalStatus === 'Accepted' && a.timeStatus === 'Past')
+    ); %>
+    <% if (history.length === 0) { %>
+      <p>No past or ignored appointments.</p>
+    <% } else { %>
+      <ul>
+        <% history.forEach(a => { %>
+          <li>
+            <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+            <%= new Date(a.startDate).toLocaleString() %> 
+            (<%= a.service %>) — 
+            <em>Status:</em> <%= a.approvalStatus === 'Accepted' ? a.timeStatus : a.approvalStatus %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</body>
+</html>

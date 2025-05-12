@@ -44,12 +44,44 @@ router.post('/book', async (req, res) => {
     });
 
     await appointment.save(); // Save the appointment in the database
-    res.redirect('/pet/home'); // Redirect to the pet dashboard (or another relevant page)
+    res.redirect('/home'); // Redirect to the pet dashboard (or another relevant page)
 
   } catch (err) {
     console.error("Booking error:", err);
     res.status(500).send("Failed to book appointment.");
   }
 });
+
+
+// View full appointment history
+router.get('/appointments/history', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  try {
+    const allAppointments = await Appointment.find({ userId: req.session.user._id })
+      .populate('pet')
+      .sort({ startDate: -1 }) // newest first
+      .exec();
+
+    // Filter only past appointments
+    const now = new Date();
+    const pastAppointments = allAppointments.filter(a => {
+      const endDate = new Date(a.startDate);
+      endDate.setDate(endDate.getDate() + a.duration);
+      return endDate < now;
+    });
+
+    res.render('appointmentHistory', {
+      appointments: pastAppointments,
+      user: req.session.user
+    });
+  } catch (err) {
+    console.error("Error loading appointment history:", err);
+    res.status(500).send("Error loading appointment history.");
+  }
+});
+
 
 module.exports = router;

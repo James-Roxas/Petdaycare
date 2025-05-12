@@ -49,14 +49,14 @@ exports.login = async (req, res) => {
     };
     req.session.token = token; // Store token in session
     res.cookie("token", token, { httpOnly: true }); // Store token in cookies (optional)
-
+    
     // Redirect based on role
     if (user.role === "admin") {
       return res.redirect("/admin/dashboard");
     } else if (user.role === "worker") {
       return res.redirect("/worker/dashboard");
     } else {
-      return res.redirect("/pet/home");
+      return res.redirect("/home");
     }
 
   } catch (error) {

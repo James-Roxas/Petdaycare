@@ -18,7 +18,7 @@ router.get('/dashboard', async (req, res) => {
 
     try {
         // Fetch pending appointments (status: 'Pending') for the worker
-        const appointments = await Appointment.find({ status: 'Pending' })
+        const appointments = await Appointment.find({ approvalStatus: 'Pending' })
             .populate('pet') // Populate pet details
             .exec();
 
@@ -81,7 +81,7 @@ router.get('/accept-appointment/:appointmentId', async (req, res) => {
         }
 
         // Update the appointment status to "Accepted"
-        appointment.status = 'Accepted';
+        appointment.approvalStatus = 'Accepted';
         await appointment.save();
         console.log("Session user data:", req.session.user.id);
         // Create WorkerBooking to link the worker and pet (if not already linked)
@@ -112,6 +112,20 @@ router.get('/accept-appointment/:appointmentId', async (req, res) => {
     }
 });
 
+router.get('/ignore-appointment/:id', async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) return res.status(404).send('Appointment not found');
+    
+    appointment.approvalStatus = 'Ignored';
+    await appointment.save();
+
+    res.redirect('/worker/dashboard'); // or wherever your dashboard is
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error ignoring appointment');
+  }
+});
 
 
 // Assign worker to a pet (from a booking)

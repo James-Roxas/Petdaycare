@@ -73,6 +73,12 @@
       <a href="/logout">Logout</a>
     </div>
   </header>
+     <div class="card">
+      <h3>User Profile</h3>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Name:</strong> <%= user.name %></p>
+    </div>
+
 
   <div class="container">
     <div class="card">
@@ -109,6 +115,8 @@
 
                 <!-- Accept Button -->
                 <a href="/worker/accept-appointment/<%= appointment._id %>" class="action-button">Accept</a>
+
+                <a href="/worker/ignore-appointment/<%= appointment._id %>" class="action-button" style="background-color: #B71C1C;">Ignore</a>
 
                 <p>Appointment Date: <%= appointment.startDate %> to <%= appointment.endDate %></p>
                 <p>Notes: <%= appointment.additionalInfo %></p>

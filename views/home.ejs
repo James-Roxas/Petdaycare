@@ -54,23 +54,33 @@
     <!-- Dashboard Grid -->
     <div class="grid">
 
-      <!-- Upcoming Appointments -->
-      <div class="card">
-        <h3>Upcoming Appointments</h3>
-        <% if (upcomingAppointments.length === 0) { %>
-          <p>No upcoming appointments.</p>
+      <!-- Appointments Overview -->
+<div class="card">
+  
+  <h3>Appointments</h3>
+
+<% if (appointments.length === 0) { %>
+  <p>No appointments.</p>
+<% } else { %>
+  <ul>
+    <% appointments.forEach(a => { %>
+      <li>
+        <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+        <%= new Date(a.startDate).toLocaleString() %> 
+        <% if (a.approvalStatus === 'Accepted') { %>
+          — <em><%= a.timeStatus %></em>
         <% } else { %>
-          <ul>
-            <% upcomingAppointments.forEach(a => { %>
-              <li>
-                <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
-                <%= new Date(a.date).toLocaleString() %> 
-                (<%= a.service %>)
-              </li>
-            <% }) %>
-          </ul>
+          — <em><%= a.approvalStatus %></em>
         <% } %>
-      </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+
+
+  <a href="/user/appointments/history" class="action-button">View Full Appointment History</a>
+</div>
 
       <!-- Notifications -->
       <div class="card">
@@ -81,24 +91,6 @@
           <ul>
             <% notifications.forEach(n => { %>
               <li><%= n.message %></li>
-            <% }) %>
-          </ul>
-        <% } %>
-      </div>
-
-      <!-- Past Appointments -->
-      <div class="card">
-        <h3>Appointment History</h3>
-        <% if (pastAppointments.length === 0) { %>
-          <p>No past appointments.</p>
-        <% } else { %>
-          <ul>
-            <% pastAppointments.forEach(a => { %>
-              <li>
-                <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
-                <%= new Date(a.date).toLocaleString() %> 
-                (<%= a.service %>)
-              </li>
             <% }) %>
           </ul>
         <% } %>
