@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Pet Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #fffde7;
+      margin: 0;
+    }
+
+    .form-container {
+      max-width: 450px;
+      margin: auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #fdd835;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #fdd835;
+      color: #1f1f1f;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffee58;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Edit Status for <%= pet.name %></h2>
+    <form action="/worker/edit-pet/<%= pet._id %>" method="POST">
+      <label for="status">Pet Status</label>
+      <input type="text" name="status" id="status" value="<%= pet.status %>" required>
+      <button type="submit">Update Status</button>
+    </form>
+    <a href="/worker/dashboard" class="back-link">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

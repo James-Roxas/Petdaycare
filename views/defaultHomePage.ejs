@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Purrfect Stay - Welcome</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css"/>
+
+  <style>
+    body.home-page {
+      background: url('/images/homebgg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #1f1d1d;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeInSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .navbar {
+      background-color: #f2d707;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .navbar-brand img {
+      height: 50px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: #333 !important;
+      background-color: #fff59d;
+      margin: 0 5px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: #ffe082;
+      color: #000 !important;
+      transform: scale(1.05);
+    }
+
+    .welcome-text, .tagline, .btn {
+      animation: fadeInSlide 1s ease forwards;
+      opacity: 0;
+    }
+
+    .welcome-text {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #000;
+      animation-delay: 0.2s;
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      color: #555;
+      animation-delay: 0.5s;
+    }
+
+    .btn-warning {
+      background-color: #f2d707;
+      border-color: #f2d707;
+      animation-delay: 0.8s;
+    }
+
+    .btn-warning:hover {
+      transform: scale(1.08);
+    }
+
+    @media (max-width: 768px) {
+      .nav-link {
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+
+<body class="home-page">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/images/logo.png" alt="Logo" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Welcome Section -->
+  <div class="container text-center mt-5">
+    <p class="welcome-text">Welcome to <strong>Purrfect Stay</strong></p>
+    <p class="tagline mb-4">Where Paws Feel at Home.</p>
+    <a href="/auth/login" class="btn btn-warning btn-lg">Get Started</a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

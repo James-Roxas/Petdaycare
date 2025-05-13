@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pet Day Care Gallery</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    .logo {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .welcome-text {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      margin: 0 5px;
+      font-weight: 500;
+      background-color: #fff59d;
+      border-radius: 5px;
+      padding: 6px 12px;
+      transition: background 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: #ffe082;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 200px;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 0 4px 6px rgba(242, 215, 7, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(242, 215, 7, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .gallery img {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar a {
+        display: block;
+        text-align: left;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg" style="background-color: #f2d707;">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="/images/logo.png" alt="Pet Day Care Logo" class="logo">
+        <span class="welcome-text">Pet Gallery</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/gallery" class="active">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Gallery Section: Animals Featured -->
+  <section class="container mt-5">
+    <p class="section-title">Animals Featured in the Pet Day Care</p>
+    <div class="gallery">
+      <!-- Use more descriptive alt text -->
+      <img src="/images/pic1.jpg" alt="Dog playing outside">
+      <img src="/images/pic2.jpg" alt="Cat relaxing in bed">
+      <img src="/images/pic3.jpg" alt="Two puppies in a basket">
+      <img src="/images/pic4.jpg" alt="Parrot on perch">
+      <img src="/images/pic5.jpg" alt="Bunny in grass">
+      <img src="/images/pic6.jpg" alt="Ferret looking curious">
+      <img src="/images/pic7.jpg" alt="Hamster with food">
+      <img src="/images/pic8.jpg" alt="Turtle in water dish">
+      <img src="/images/pic9.jpg" alt="Kitten in playpen">
+      <img src="/images/pic10.jpg" alt="Golden retriever smiling">
+      <img src="/images/pic11.jpg" alt="Puppy napping">
+      <img src="/images/pic12.jpg" alt="Birds in aviary">
+    </div>
+  </section>
+
+  <!-- Gallery Section: Customers -->
+  <section class="container mt-5">
+    <p class="section-title">Customers with their Lovely Pets</p>
+    <div class="gallery">
+      <img src="/images/pic13.jpg" alt="Owner hugging dog">
+      <img src="/images/pic14.jpg" alt="Family with their pet cat">
+      <img src="/images/pic15.jpg" alt="Man holding rabbit">
+      <img src="/images/pic16.jpg" alt="Lady walking her dog">
+      <img src="/images/pic17.jpg" alt="Child with puppy">
+      <img src="/images/pic18.jpg" alt="Owner playing fetch">
+      <img src="/images/pic19.jpg" alt="Happy customer and pet">
+      <img src="/images/pic20.jpg" alt="Senior and pet cat">
+      <img src="/images/pic21.jpg" alt="Teen with pet bird">
+      <img src="/images/pic22.jpg" alt="Family photo with pet">
+      <img src="/images/pic23.jpg" alt="Customer petting dog">
+      <img src="/images/pic24.jpg" alt="Smiling woman and pup">
+    </div>
+  </section>
+
+  <!-- Gallery Section: Facilities -->
+  <section class="container mt-5 mb-5">
+    <p class="section-title">Pet Day Care Facilities</p>
+    <div class="gallery">
+      <img src="/images/pic25.jpg" alt="Outdoor play area">
+      <img src="/images/pic26.jpg" alt="Indoor lounge">
+      <img src="/images/pic27.jpg" alt="Feeding area">
+      <img src="/images/pic28.jpg" alt="Pet grooming room">
+      <img src="/images/pic29.jpg" alt="Sleeping quarters">
+      <img src="/images/pic30.jpg" alt="Training space">
+      <img src="/images/pic31.jpg" alt="Bathing station">
+      <img src="/images/pic32.jpg" alt="Vet check-up zone">
+      <img src="/images/pic33.jpg" alt="Reception desk">
+      <img src="/images/pic34.jpg" alt="Leash storage area">
+      <img src="/images/pic35.jpg" alt="Dog run area">
+      <img src="/images/pic36.jpg" alt="Cage-free play area">
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
