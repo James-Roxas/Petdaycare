@@ -1,27 +1,33 @@
-#🐾 Purrfect Stay – Pet Daycare Monitoring System
-Purrfect Stay is a web-based pet daycare platform designed to help pet owners book and monitor pet care services. Built using Node.js, Express.js, and MongoDB, the system features real-time pet status updates (simulated), appointment booking, and role-based dashboards for users and workers.
+# 🐾 Purrfect Stay – Pet Daycare Monitoring System
 
-#🚀 Features
-- User & Worker authentication with role-based routing
-- Create and manage pet profiles
-- Book appointments linked to existing pet profiles
-- Real-time simulated pet status updates via dashboard
-- Workers can manage pet activities and appointments
-- Secure password encryption using bcrypt
-- MongoDB Atlas integration
+Purrfect Stay is a web-based pet daycare platform designed to help pet owners book and monitor pet care services. Built using **Node.js, Express.js, and MongoDB**, the system features:
+- **Real-time pet status updates** (simulated)
+- **Appointment booking**
+- **Role-based dashboards** for users and workers
 
-🧱 Technologies Used
-- Backend: Node.js, Express.js
-- Database: MongoDB (MongoDB Atlas)
-- Frontend: EJS, HTML, CSS
-- Authentication: bcrypt, cookie-parser
-- Deployment: Docker + Render
+## 🚀 Features
+✅ **User & Worker authentication** with role-based routing  
+✅ **Create and manage pet profiles**  
+✅ **Book appointments** linked to existing pet profiles  
+✅ **Real-time simulated pet status updates** via dashboard  
+✅ **Workers can manage pet activities and appointments**  
+✅ **Secure password encryption** using bcrypt  
+✅ **MongoDB Atlas integration**  
 
-⚙️ Installation
+## 🧱 Technologies Used
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB (MongoDB Atlas)
+- **Frontend:** EJS, HTML, CSS
+- **Authentication:** bcrypt, cookie-parser
+- **Deployment:** Docker + Render
+
+## ⚙️ Installation
+```bash
 git clone https://github.com/yourusername/purrfect-stay.git
 cd purrfect-stay
 npm install
-npm start or node src/index.js
+npm start  # or node src/index.js
+
 
 🐳 Docker Deployment
 To run locally with Docker:
