@@ -1,105 +1,151 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <title><%= title || 'Pet Service Booking Form' %></title>
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <title><%= title || 'Pet Service Booking Form' %></title>
+  <style>
+    body.contactbg {
+      background-image: url('/images/contactbg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
 
-      body.contactbg {
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        display: flex;
+    body.contactbg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: -1;
+    }
+
+    .main-header {
+      background-color: #f2d707;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .welcome-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .header-nav a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      background-color: #fff59d;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      background-color: #ffe082;
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
         flex-direction: column;
-        justify-content: flex-start;
-        margin: 0;
-        padding-bottom: 70px;
-        box-sizing: border-box;
-        position: relative;
+        align-items: flex-start;
       }
 
-      body.contactbg::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
+      .header-nav {
         width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.8);
-        opacity: 0.8;
-        pointer-events: none;
-        z-index: -1;
+        margin-top: 10px;
+        justify-content: flex-start;
       }
+    }
 
-      .container {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        box-sizing: border-box;
-        margin-top: auto;
-        margin-bottom: auto;
-        z-index: 10;
-        background-color: rgba(255,255,255,0.0);
-        border-radius: 10px;
-      }
+    form {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
 
-      form {
-        margin-bottom: 20px;
-        background-color: rgba(255,255,255,0.9);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
+    .btn-primary {
+      background-color: #f2d707;
+      border-color: #f2d707;
+      color: black;
+      font-weight: bold;
+    }
 
-      .logo {
-        margin-right: 10px;
-      }
+    .btn-primary:hover {
+      background-color: #e6c800;
+      border-color: #e6c800;
+      color: black;
+    }
 
-      .navbar-nav .nav-item {
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      .navbar-nav .nav-link{
-         color: black;
-      }
+    a[href="/home"] {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: #333;
+      text-decoration: none;
+    }
 
-      .navbar-dark .navbar-nav .nav-link:hover,
-      .navbar-dark .navbar-nav .nav-link:focus {
-        color: #000000;
-      }
-      .navbar-dark .navbar-brand:hover,
-      .navbar-dark .navbar-brand:focus {
-        color: #000000;
-      }
-
-    </style>
+    a[href="/home"]:hover {
+      text-decoration: underline;
+    }
+  </style>  
 </head>
-<body class="contactbg" style="background-image: url('/contactbg.jpg');">
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #f2d707;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        <img src="/logo.png" alt="Logo" height="50" />
+<body class="contactbg">
+  <header class="main-header">
+    <div class="header-left">
+      <a href="/">
+        <img src="/images/logo.png" alt="Logo" class="logo" />
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-        </ul>
-      </div>
+      <div class="welcome-text">Pet Service</div>
     </div>
-  </nav>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/gallery">Gallery</a>
+      <a href="/contact" class="active">Contact Us</a>
+      <a href="/about">About Us</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>  
 
-  <div class="container my-5">
-    <form method="POST" action="/user/book"> <!-- Form now sends POST request to /appointments/book -->
-      <a href="/home">Back to Dashboard</a> 
-      <h3 class="mb-4">Book Now</h3>
+  <div class="container">
+    <form method="POST" action="/user/book">
+      <a href="/home">&larr; Back to Dashboard</a>
+      <h3 class="mb-4 mt-3">Book a Pet Service</h3>
+
       <div class="mb-3">
         <label class="form-label">Choose a pet for the service:</label>
         <div class="d-flex flex-wrap">
@@ -121,12 +167,12 @@
 
       <div class="row mb-3">
         <div class="col-md-6">
-          <label class="form-label">Please pick starting date of the service:</label>
-          <input type="date" name="startDate" class="form-control" />
+          <label class="form-label">Starting date of the service:</label>
+          <input type="date" name="startDate" class="form-control" required />
         </div>
         <div class="col-md-6">
-          <label class="form-label">Number of Day/Nights Required?</label>
-          <input type="number" name="duration" class="form-control" />
+          <label class="form-label">Number of Days/Nights Required:</label>
+          <input type="number" name="duration" class="form-control" required />
         </div>
       </div>
 
@@ -143,17 +189,18 @@
         <input type="text" name="pickupAddress" class="form-control" />
       </div>
 
-      <button type="submit" class="btn btn-primary">Send</button>
+      <button type="submit" class="btn btn-primary">Send Booking</button>
     </form>
   </div>
 
   <script>
     function toggleAddressField() {
-      var pickupOption = document.getElementById("pickupOption").value;
-      var pickupAddressField = document.getElementById("pickupAddressField");
+      const pickupOption = document.getElementById("pickupOption").value;
+      const pickupAddressField = document.getElementById("pickupAddressField");
       pickupAddressField.style.display = pickupOption === "yes" ? "block" : "none";
     }
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-zmwYmE4a9k5xuZg6H5lGmpRi6v1mKz3K+j0hKm9L5gAGvsnx6d9v6u9z8XvN0aa" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-zmwYmE4a9k5xuZg6H5lGmpRi6v1mKz3K+j0hKm9L5gAGvsnx6d9v6u9z8XvN0aa" crossorigin="anonymous"></script>
 </body>
 </html>

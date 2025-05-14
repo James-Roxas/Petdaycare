@@ -3,54 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Pet Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('/images/homebgg.jpg');
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .form-container label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus,
+    .form-container textarea:focus {
+      border-color: #fbc02d;
+      outline: none;
+    }
+
+    .form-container button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #fdd835;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #fbc02d;
+    }
+
+    .action-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background-color: #fdd835;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .action-button:hover {
+      background-color: #fbc02d;
+    }
+  </style>
 </head>
 <body>
+
   <h1>Create Pet Profile</h1>
-<a href="/home" class="action-button">Back to Dashboard</a>
-  <form action="/pet/create" method="POST" enctype="multipart/form-data">
-    <label for="name">Pet Name:</label>
-    <input type="text" id="name" name="name" required><br>
-  
-    <label for="breed">Breed:</label>
-    <input type="text" id="breed" name="breed" required><br>
-  
-    <label for="age">Age (years):</label>
-    <input type="number" id="age" name="age" required><br>
-  
-    <label for="gender">Gender:</label>
-    <select name="gender" id="gender" required>
-      <option value="">Select</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select><br>
-  
-    <label for="color">Color:</label>
-    <input type="text" id="color" name="color"><br>
-  
-    <label for="birthday">Birthday:</label>
-    <input type="date" id="birthday" name="birthday"><br>
-  
-    <label for="spayed">Spayed / Neutered:</label>
-    <select name="spayed" id="spayed">
-      <option value="">Select</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select><br>
-  
-    <label for="weight">Weight (kg):</label>
-    <input type="number" step="0.1" id="weight" name="weight"><br>
-  
-    <label for="photo">Upload Photo:</label>
-    <input type="file" name="photo" accept="image/*"><br>
-  
-    <label for="notes">Additional Notes:</label><br>
-    <textarea name="notes" id="notes" rows="4" cols="30"></textarea><br>
-  
-    <!-- Owner Info -->
-    <input type="hidden" name="owner" value="<%= user.name %>">
-  
-    <button type="submit">Save Profile</button>
-  </form>
-  
+  <a href="/home" class="action-button">Back to Dashboard</a>
+
+  <div class="form-container">
+    <form action="/pet/create" method="POST" enctype="multipart/form-data">
+      <label for="name">Pet Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="breed">Breed:</label>
+      <input type="text" id="breed" name="breed" required>
+
+      <label for="age">Age (years):</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="gender">Gender:</label>
+      <select name="gender" id="gender" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="color">Color:</label>
+      <input type="text" id="color" name="color">
+
+      <label for="birthday">Birthday:</label>
+      <input type="date" id="birthday" name="birthday">
+
+      <label for="spayed">Spayed / Neutered:</label>
+      <select name="spayed" id="spayed">
+        <option value="">Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label for="weight">Weight (kg):</label>
+      <input type="number" step="0.1" id="weight" name="weight">
+
+      <label for="photo">Upload Photo:</label>
+      <input type="file" name="photo" accept="image/*">
+
+      <label for="notes">Additional Notes:</label>
+      <textarea name="notes" id="notes" rows="4" placeholder="Write something about your pet..."></textarea>
+
+      <!-- Owner Info -->
+      <input type="hidden" name="owner" value="<%= user.name %>">
+
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+
 </body>
 </html>

@@ -4,35 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User Dashboard - Purrfect Stay</title>
-  <link rel="stylesheet" href="/css/home.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('/images/contactbg.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      color: #000;
+    }
+
+    .main-header {
+      background-color: #f2d707;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .welcome-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .header-nav a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      background-color: #fff59d;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      background-color: #ffe082;
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-nav {
+        width: 100%;
+        margin-top: 10px;
+        justify-content: flex-start;
+      }
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      background-color: rgba(255,255,255,0.9);
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background-color: #d2c919;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #1565c0;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header class="main-header">
     <div class="header-left">
-      <img src="/public/logo.png" alt="Logo" class="logo" />
+      <img src="/images/logo.png" alt="Purrfect Stay Logo" class="logo" />
       <span class="welcome-text">Welcome, <%= user.name %>!</span>
     </div>
     <nav class="header-nav">
-      <a href="/">Home</a>
-      <a href="/gallery">Gallery</a>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
-      <a href="/edit-profile">Edit Profile</a>
-      <a href="/logout">Logout</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/gallery" class="nav-link">Gallery</a>
+      <a href="/contact" class="nav-link">Contact</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="/edit-profile" class="nav-link">Edit Profile</a>
+      <a href="/logout" class="nav-link">Logout</a>
     </nav>
   </header>
 
-  <div class="container">
+  <!-- Main Content -->
+  <main style="padding: 2rem;">
 
     <!-- User Profile -->
-    <div class="card">
+    <section class="card">
       <h3>User Profile</h3>
       <p><strong>Email:</strong> <%= user.email %></p>
       <p><strong>Name:</strong> <%= user.name %></p>
-    </div>
+    </section>
 
     <!-- Pets Overview -->
-    <div class="card">
+    <section class="card">
       <h3>Your Pets</h3>
       <% if (pets.length === 0) { %>
         <p>No pets added yet.</p>
@@ -41,46 +141,36 @@
           <% pets.forEach(p => { %>
             <li>
               <strong><%= p.name %></strong> - Status: 
-              <span id="status-<%= p._id %>"><%= p.status || 'Unknown' %></span>
-              <br />
-              <a href="/pet/view/<%= p._id %>" class="action-button">View Pet Profile</a>
+              <span id="status-<%= p._id %>"><%= p.status || 'Unknown' %></span><br />
+              <a href="/pet/view/<%= p._id %>" class="btn">View Pet Profile</a>
             </li>
           <% }) %>
         </ul>
       <% } %>
-      <a href="/pet/create" class="action-button">Add Pet Profile</a>
-    </div>
+      <a href="/pet/create" class="btn">Add Pet Profile</a>
+    </section>
 
     <!-- Dashboard Grid -->
-    <div class="grid">
-
-      <!-- Appointments Overview -->
-<div class="card">
-  
-  <h3>Appointments</h3>
-
-<% if (appointments.length === 0) { %>
-  <p>No appointments.</p>
-<% } else { %>
-  <ul>
-    <% appointments.forEach(a => { %>
-      <li>
-        <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
-        <%= new Date(a.startDate).toLocaleString() %> 
-        <% if (a.approvalStatus === 'Accepted') { %>
-          — <em><%= a.timeStatus %></em>
+    <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+      
+      <!-- Appointments -->
+      <div class="card">
+        <h3>Appointments</h3>
+        <% if (appointments.length === 0) { %>
+          <p>No appointments.</p>
         <% } else { %>
-          — <em><%= a.approvalStatus %></em>
+          <ul>
+            <% appointments.forEach(a => { %>
+              <li>
+                <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+                <%= new Date(a.startDate).toLocaleString() %> — 
+                <em><%= a.approvalStatus === 'Accepted' ? a.timeStatus : a.approvalStatus %></em>
+              </li>
+            <% }) %>
+          </ul>
         <% } %>
-      </li>
-    <% }) %>
-  </ul>
-<% } %>
-
-
-
-  <a href="/user/appointments/history" class="action-button">View Full Appointment History</a>
-</div>
+        <a href="/user/appointments/history" class="btn">View Full Appointment History</a>
+      </div>
 
       <!-- Notifications -->
       <div class="card">
@@ -96,7 +186,7 @@
         <% } %>
       </div>
 
-      <!-- Payment Summary -->
+      <!-- Payments -->
       <div class="card">
         <h3>Payment Summary</h3>
         <% if (payments.length === 0) { %>
@@ -109,11 +199,10 @@
           </ul>
         <% } %>
       </div>
-      
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <!-- Socket.io for real-time pet activity updates -->
+  <!-- Real-time Pet Activity -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -124,5 +213,6 @@
       }
     });
   </script>
+
 </body>
 </html>

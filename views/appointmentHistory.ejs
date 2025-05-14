@@ -4,12 +4,130 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Appointment History</title>
-  <link rel="stylesheet" href="/css/home.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fefae0;
+      color: #333;
+    }
+
+    .main-header {
+  background-color: #f2d707; /* Original yellow */
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 3px solid #e0c200; /* Slight border for structure */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 15px;
+}
+
+.welcome-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.header-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.header-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: #fff59d; /* Soft yellow button */
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+  background-color: #ffe082; /* Brighter on hover */
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-nav {
+    width: 100%;
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+}
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+      color: #606c38;
+      border-bottom: 2px solid #dda15e;
+      padding-bottom: 5px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f0ead2;
+      margin: 10px 0;
+      padding: 15px;
+      border-left: 5px solid #bc6c25;
+      border-radius: 6px;
+    }
+
+    p {
+      margin: 10px 0;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-nav {
+        margin-top: 10px;
+      }
+
+      .header-nav a {
+        margin-left: 0;
+        margin-right: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="main-header">
     <div class="header-left">
-      <img src="/public/logo.png" alt="Logo" class="logo" />
+      <img src="/images/logo.png" alt="Logo" class="logo" />
       <span class="welcome-text">Appointment Overview for <%= user.name %></span>
     </div>
     <nav class="header-nav">
@@ -41,26 +159,26 @@
     <% } %>
 
     <!-- Accepted Appointments -->
-<h3>Accepted</h3>
-<% const accepted = appointments.filter(a => a.approvalStatus === 'Accepted' && a.timeStatus !== 'Past'); %>
-<% if (accepted.length === 0) { %>
-  <p>No upcoming accepted appointments.</p>
-<% } else { %>
-  <ul>
-    <% accepted.forEach(a => {
-      const start = new Date(a.startDate);
-      const end = new Date(start);
-      end.setDate(end.getDate() + a.duration);
-    %>
-      <li>
-        <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
-        <%= start.toLocaleString() %> to <%= end.toLocaleString() %> 
-        (<%= a.service %>) — 
-        <em>Status:</em> <%= a.timeStatus %>
-      </li>
-    <% }) %>
-  </ul>
-<% } %>
+    <h3>Accepted</h3>
+    <% const accepted = appointments.filter(a => a.approvalStatus === 'Accepted' && a.timeStatus !== 'Past'); %>
+    <% if (accepted.length === 0) { %>
+      <p>No upcoming accepted appointments.</p>
+    <% } else { %>
+      <ul>
+        <% accepted.forEach(a => {
+          const start = new Date(a.startDate);
+          const end = new Date(start);
+          end.setDate(end.getDate() + a.duration);
+        %>
+          <li>
+            <strong><%= a.pet?.name || 'Unnamed Pet' %></strong> — 
+            <%= start.toLocaleString() %> to <%= end.toLocaleString() %> 
+            (<%= a.service %>) — 
+            <em>Status:</em> <%= a.timeStatus %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
 
     <!-- Appointment History (Ignored or Past) -->
     <h2>Appointment History</h2>

@@ -6,43 +6,119 @@
   
   <link rel="stylesheet" href="/css/style.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <style>
+    /* Navbar Styles */
+    .main-header {
+      background-color: #f2d707;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .welcome-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .header-nav a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      background-color: #fff59d;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      background-color: #ffe082;
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-nav {
+        width: 100%;
+        margin-top: 10px;
+        justify-content: flex-start;
+      }
+    }
+
+    /* Gallery Layout - Image Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 200px; /* Keeps images consistent */
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Paragraph styling for section titles */
+    p.featured, p.customers, p.facilities {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+
+    /* Optional: Adjust padding for the main container */
+    .container {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Same navbar as home -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #f2d707;">
-    <div class="container-fluid">
-      <!-- Logo -->
+  <!-- Navbar -->
+  <header class="main-header">
+    <div class="header-left">
       <div class="logo">
-        <img src="logo.png" alt="Logo" height="50" />
-      </div>
-
-      <!-- Navbar links aligned right -->
-      <div class="navbar-collapse d-flex justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/gallery">Gallery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/contact">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About Us</a>
-          </li>
-        </ul>
+        <img src="/images/logo.png" alt="Logo" height="50" />
       </div>
     </div>
-  </nav>
+    <div class="header-nav">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/gallery" class="active">Gallery</a>
+      <a href="/contact" class="nav-link">Contact Us</a>
+      <a href="/about" class="nav-link">About Us</a>
+    </div>
+  </header>
 
   <!-- Gallery content -->
-  <div class="container mt-4">
-
+  <div class="container">
     <p class="featured">Animals Featured in the Pet Day Care.</p>
-    
-    <div class="d-flex gap-3 gallery">
+    <div class="gallery">
       <img src="/images/pic1.jpg" alt="Image 1">
       <img src="/images/pic2.jpg" alt="Image 2">
       <img src="/images/pic3.jpg" alt="Image 3">
@@ -55,15 +131,12 @@
       <img src="/images/pic10.jpg" alt="Image 10">
       <img src="/images/pic11.jpg" alt="Image 11">
       <img src="/images/pic12.jpg" alt="Image 12">
-
     </div>
   </div>
 
   <div class="container mt-4">
-
     <p class="customers">Customers with their lovely pets.</p>
-    
-    <div class="d-flex gap-3 gallery">
+    <div class="gallery">
       <img src="/images/pic13.jpg" alt="Image 13">
       <img src="/images/pic14.jpg" alt="Image 14">
       <img src="/images/pic15.jpg" alt="Image 15">
@@ -76,15 +149,12 @@
       <img src="/images/pic22.jpg" alt="Image 22">
       <img src="/images/pic23.jpg" alt="Image 23">
       <img src="/images/pic24.jpg" alt="Image 24">
-
     </div>
   </div>
 
   <div class="container mt-4">
-
     <p class="facilities">Pet Day Care Facilities.</p>
-    
-    <div class="d-flex gap-3 gallery">
+    <div class="gallery">
       <img src="/images/pic25.jpg" alt="Image 25">
       <img src="/images/pic26.jpg" alt="Image 26">
       <img src="/images/pic27.jpg" alt="Image 27">
@@ -97,12 +167,8 @@
       <img src="/images/pic34.jpg" alt="Image 34">
       <img src="/images/pic35.jpg" alt="Image 35">
       <img src="/images/pic36.jpg" alt="Image 36">
-
     </div>
   </div>
 
-
 </body>
 </html>
-
-

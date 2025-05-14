@@ -43,39 +43,100 @@
     footer .social-icons i {
       margin: 0 10px;
     }
+
+    .main-header {
+  background-color: #f2d707;
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 15px;
+}
+
+.welcome-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.header-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.header-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: #fff59d;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+  background-color: #ffe082;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-nav {
+    width: 100%;
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+}
   </style>
 </head>
 
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #f2d707;">
-    <div class="container-fluid">
-      <div class="logo">
-        <img src="logo.png" alt="Logo" height="50" />
-      </div>
-      <div class="navbar-collapse d-flex justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/gallery">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-        </ul>
-      </div>
+  <header class="main-header">
+    <div class="header-left">
+      <a href="/">
+        <img src="/images/logo.png" alt="Logo" class="logo" />
+      </a>
+      <div class="welcome-text">Pet Service</div>
     </div>
-  </nav>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/gallery">Gallery</a>
+      <a href="/about" class="active">About Us</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  
 
   <!-- Carousel -->
   <div id="carouselOne" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="picc1.jpg" class="d-block w-100" alt="Slide 1">
+        <img src="/images/picc1.jpg" class="d-block w-100" alt="Slide 1">
       </div>
       <div class="carousel-item">
-        <img src="picc2.jpg" class="d-block w-100" alt="Slide 2">
+        <img src="/images/picc2.jpg" class="d-block w-100" alt="Slide 2">
       </div>
       <div class="carousel-item">
-        <img src="picc4.jpg" class="d-block w-100" alt="Slide 3">
+        <img src="/images/picc4.jpg" class="d-block w-100" alt="Slide 3">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselOne" data-bs-slide="prev">
