@@ -60,7 +60,7 @@ router.get('/appointments/history', async (req, res) => {
   }
 
   try {
-    const allAppointments = await Appointment.find({ userId: req.session.user._id })
+    const allAppointments = await Appointment.find({ userId: req.session.user.id })
       .populate('pet')
       .sort({ startDate: -1 }) // newest first
       .exec();
