@@ -48,7 +48,7 @@ day_care_app.get("/", (req, res) => {
     // redirect to dashboard if logged in
     return res.redirect("/home");
   }
-  res.render("defaultHomepage");
+  res.render("defaultHomepage.ejs");
 });
 day_care_app.use("/auth", authRoutes);
 day_care_app.use("/pet", petRoutes);
