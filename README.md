@@ -38,6 +38,7 @@ cd purrfect-stay
 npm install
 npm start  # or node src/index.js
 
+---
 
 ## 🐳 Docker Deployment
 
