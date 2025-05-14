@@ -1,7 +1,7 @@
-🐾 Purrfect Stay – Pet Daycare Monitoring System
+#🐾 Purrfect Stay – Pet Daycare Monitoring System
 Purrfect Stay is a web-based pet daycare platform designed to help pet owners book and monitor pet care services. Built using Node.js, Express.js, and MongoDB, the system features real-time pet status updates (simulated), appointment booking, and role-based dashboards for users and workers.
 
-🚀 Features
+#🚀 Features
 - User & Worker authentication with role-based routing
 - Create and manage pet profiles
 - Book appointments linked to existing pet profiles
