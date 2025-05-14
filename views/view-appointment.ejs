@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appointment Details</title>
+  <link rel="stylesheet" href="/css/home.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffde7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #f2d707;
+      padding: 1rem 2rem;
+      border-bottom: 3px solid #e0c200;
+    }
+
+    .header h1 {
+      margin: 0;
+      color: #000;
+      font-size: 1.8rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      margin-top: 2rem;
+      border-radius: 10px;
+    }
+
+    h3 {
+      color: #000;
+      border-left: 5px solid #f2d707;
+      padding-left: 10px;
+      margin-top: 2rem;
+    }
+
+    p {
+      margin: 0.4rem 0;
+    }
+
+    strong {
+      color: #555;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 10px 20px;
+      background-color: #f2d707;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #e6c700;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Appointment Details for <%= appointment.pet.name %></h1>
+  </div>
+
+  <div class="container">
+    <!-- Pet Information -->
+    <h3>Pet Information</h3>
+    <p><strong>Name:</strong> <%= appointment.pet.name %></p>
+    <p><strong>Breed:</strong> <%= appointment.pet.breed %></p>
+    <p><strong>Age:</strong> <%= appointment.pet.age %> years</p>
+    <p><strong>Gender:</strong> <%= appointment.pet.gender %></p>
+    <p><strong>Color:</strong> <%= appointment.pet.color %></p>
+    <p><strong>Status:</strong> <%= appointment.pet.status %></p>
+    <p><strong>Owner:</strong> <%= appointment.pet.owner %></p>
+
+    <!-- Appointment Information -->
+    <h3>Appointment Information</h3>
+    <p><strong>Status:</strong> <%= appointment.status %></p>
+    <p><strong>Appointment Start:</strong> <%= appointment.startDate %></p>
+    <p><strong>Duration:</strong> <%= appointment.duration %> days</p>
+    <p><strong>Additional Info:</strong> <%= appointment.additionalInfo %></p>
+    <p><strong>Pickup Option:</strong> <%= appointment.pickupOption %></p>
+
+    <a href="/worker/dashboard">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

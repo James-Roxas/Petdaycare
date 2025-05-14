@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Pet Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffde7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #f2d707;
+      padding: 1.5rem 2rem;
+      border-bottom: 3px solid #e0c200;
+    }
+
+    .header h1 {
+      margin: 0;
+      color: #000;
+      font-size: 1.8rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 1rem;
+      margin-top: 0.4rem;
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      margin-top: 0.4rem;
+    }
+
+    button {
+      background-color: #f2d707;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 1.5rem;
+    }
+
+    button:hover {
+      background-color: #e0c200;
+    }
+
+    .action-button {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #f2d707;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-button:hover {
+      background-color: #e0c200;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Edit Pet: <%= pet.name %></h1>
+  </div>
+
+  <div class="container">
+    <form action="/pet/edit/<%= pet._id %>" method="POST" enctype="multipart/form-data">
+      <label>Name:
+        <input type="text" name="name" value="<%= pet.name %>" required>
+      </label>
+
+      <label>Breed:
+        <input type="text" name="breed" value="<%= pet.breed %>">
+      </label>
+
+      <label>Age:
+        <input type="number" name="age" value="<%= pet.age %>">
+      </label>
+
+      <label>Weight:
+        <input type="number" name="weight" value="<%= pet.weight %>">
+      </label>
+
+      <label>Color:
+        <input type="text" name="color" value="<%= pet.color %>">
+      </label>
+
+      <label>Gender:
+        <select name="gender">
+          <option value="Male" <%= pet.gender === 'Male' ? 'selected' : '' %>>Male</option>
+          <option value="Female" <%= pet.gender === 'Female' ? 'selected' : '' %>>Female</option>
+        </select>
+      </label>
+
+      <label>Birthday:
+        <input type="date" name="birthday" value="<%= pet.birthday.toISOString().substring(0, 10) %>">
+      </label>
+
+      <label>Spayed:
+        <select name="spayed">
+          <option value="Yes" <%= pet.spayed === 'Yes' ? 'selected' : '' %>>Yes</option>
+          <option value="No" <%= pet.spayed === 'No' ? 'selected' : '' %>>No</option>
+        </select>
+      </label>
+
+      <label>Notes:
+        <textarea name="notes"><%= pet.notes %></textarea>
+      </label>
+
+      <label>New Photo:
+        <input type="file" name="photo">
+      </label>
+
+      <button type="submit">Update</button>
+    </form>
+
+    <a href="/home" class="action-button">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

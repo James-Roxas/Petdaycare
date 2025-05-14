@@ -2,7 +2,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+<<<<<<< HEAD
     background-image: url('/css/contactbg.jpg');
+=======
+>>>>>>> backend_design
   }
   
   .main-header {
@@ -53,9 +56,13 @@ body {
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 8px;
+<<<<<<< HEAD
     background-color: #fffbea; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }  
+=======
+  }
+>>>>>>> backend_design
   
   .card h3 {
     margin-top: 0;
@@ -71,8 +78,17 @@ body {
     display: inline-block;
     padding: 8px 12px;
     margin-top: 10px;
+<<<<<<< HEAD
     background-color: #f2d707;
     color: white;
     text-decoration: none;
     border-radius: 5px;
   }
+=======
+    background-color: #1976D2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+>>>>>>> backend_design
