@@ -69,11 +69,8 @@ docker run -p 3000:3000 purrfect-stay
 ---
 
 ## 👨‍💻 Contributors
-
-| Name                      | Role                                                                 |
-|---------------------------|----------------------------------------------------------------------|
-| **Amate, Ruby Ann**       | Frontend & UI Design (User & Worker Dashboard, Login/Signup, Booking) |
-| **Colo, Jenny Mae**       | Frontend & UI Design (Homepage, Gallery, About Us), Deployment       |
-| **Piñgol, Zandra Nicole A.** | Backend (Pet Profile System, Worker Dashboard)                      |
-| **Roxas, James Martin C.**| Backend (Authentication, Appointments), Deployment                   |
+Amate, Ruby Ann – Frontend & UI Design (User & Worker dashboard, Login/Signup, User/Pet Profiles, Booking)
+Colo, Jenny Mae – Frontend & UI Design (Defaulthomepage get started, Gallery, about us), Deployment
+Piñgol, Zandra Nicole A. – Backend, Pet Profile System, & Worker Dashboard
+Roxas, James Martin C. – Backend, Authentication, Appoinment & Deployment
 
