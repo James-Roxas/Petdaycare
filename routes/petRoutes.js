@@ -39,7 +39,7 @@ router.post('/add-pet', async (req, res) => {
 
     try {
         await newPet.save();
-        res.redirect('/pet/home');
+        res.redirect('/home');
     } catch (err) {
         console.error("Error adding new pet:", err);
         res.status(500).send("Error adding pet.");
@@ -79,7 +79,7 @@ router.post('/create', upload.single('photo'), async (req, res) => {
 
     try {
         await newPet.save();
-        res.redirect('/pet/home');
+        res.redirect('/home');
     } catch (err) {
         console.error("Error saving pet profile:", err);
         res.status(500).send("Could not save pet profile.");
@@ -179,7 +179,7 @@ if (pet.photo) {
 
     await Pet.deleteOne({ _id: req.params.petId });
 
-    res.redirect('/pet/home');
+    res.redirect('/home');
   } catch (err) {
     console.error("Error deleting pet:", err);
     res.status(500).send("Failed to delete pet.");
